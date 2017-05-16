@@ -1,16 +1,27 @@
 /*
 OBS FOR Testing run the npm start in a diffrent 
-process
+Terminal
 */
 const axios = require('axios')
+//import axios from 'axios'
 const expect = require('chai').expect
 const baseURL = "http://localhost:3000"
+const MongoClient = require('mongodb').MongoClient
 
 describe('API Test', function(){
 
 
     before(function(done){
         done()
+    })
+
+    afterEach(function(done){
+        //Cleans up. Deletes Pear!
+        MongoClient.connect("mongodb://toDoUser:Hest123@ds119588.mlab.com:19588/todo", function(err,db){
+        db.collection("store").deleteOne({name: 'Pear'}, function(err,data){
+            done()
+            })
+        })
     })
 
     describe('Server Started test', function(){
@@ -22,6 +33,41 @@ describe('API Test', function(){
             })
         })
     })
+
+    describe('insert a Document', function(){
+        it('insert a dummyObject', function(done){
+            var dummyFruit = {name: "Pear", price:12, available: true }
+            axios.post(`${baseURL}/api/store`,{ Fruit: dummyFruit })
+            .then(function(response){
+                expect(response._id).to.exist
+                expect(response.name).to.be.equal("Pear")
+                done()
+            })
+            .catch(function(err){
+                //console.log(err)
+                expect(false).to.be.equal(true)
+                done()
+            })
+        })
+    })
+
+    describe('Edit the Status of an Object', function(){
+        it('Edit status', function(done){
+             var dummyFruit = {name: "Pear", price:12, available: true }
+            axios.post(`${baseURL}/api/store`,{ Fruit: dummyFruit })
+            .then(function(response){
+                expect(response._id).to.exist
+                expect(response.name).to.be.equal("Pear")
+                
+                    axios.put(`${baseURL}/api/store`),{FruitName: "Pear", available: false}
+                            .then(function(response){
+                            expect(response.available).to.be.equal(false)
+                                    done()
+                        })
+            })
+        })
+    })
+
 
 
 })
