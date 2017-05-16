@@ -8,6 +8,22 @@ router.get("/store", function(req,res){
     })
 })
 
+router.post("/store", function(req,res){
+    let storeObj = req.body.Fruit
+    DAO.createStoreObject(storeObj,function(data){
+        res.send(data)
+    })
+})
+
+router.put("/store",function(req,res){
+    console.log("HIT THE URL!")
+    let FruitToBeUpdated = req.body
+    console.log(FruitToBeUpdated)
+    DAO.updateStoreObject(FruitToBeUpdated,function(data){
+        res.send(data)
+    })
+})
+
 
 
 

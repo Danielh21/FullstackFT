@@ -39,8 +39,8 @@ describe('API Test', function(){
             var dummyFruit = {name: "Pear", price:12, available: true }
             axios.post(`${baseURL}/api/store`,{ Fruit: dummyFruit })
             .then(function(response){
-                expect(response._id).to.exist
-                expect(response.name).to.be.equal("Pear")
+                expect(response.data._id).to.exist
+                expect(response.data.name).to.be.equal("Pear")
                 done()
             })
             .catch(function(err){
@@ -56,13 +56,18 @@ describe('API Test', function(){
              var dummyFruit = {name: "Pear", price:12, available: true }
             axios.post(`${baseURL}/api/store`,{ Fruit: dummyFruit })
             .then(function(response){
-                expect(response._id).to.exist
-                expect(response.name).to.be.equal("Pear")
+                expect(response.data._id).to.exist
+                expect(response.data.name).to.be.equal("Pear")
                 
-                    axios.put(`${baseURL}/api/store`),{FruitName: "Pear", available: false}
+                    axios.put(`${baseURL}/api/store`,{FruitName: "Pear", available: false})
                             .then(function(response){
-                            expect(response.available).to.be.equal(false)
+                            expect(response.data.available).to.be.equal(false)
                                     done()
+                        })
+                        .catch(function(err){
+                            console.log(err)
+                            expect(false).to.be.equal(true)
+                            done()
                         })
             })
         })
