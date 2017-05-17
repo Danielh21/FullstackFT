@@ -4,6 +4,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import Shop from './Shop'
 import Checkout from './Checkout'
 import ThanksComponet from './ThanksComponet'
+import axios from 'axios'
+const urlToFetch = "http://localhost:3000"
+
 
 
 class ClassComponent extends Component {
@@ -18,17 +21,23 @@ class ClassComponent extends Component {
     }
 
     fetchStoreData(){
-       var dummyItems = [
-            {name:"Hello", price: 2},
-            {name:"Grete", price: 40}
-        ]
-        setTimeout(() =>{
-        this.setState({StoreItem: dummyItems})
-        },1000)
+        axios.get(`${urlToFetch}/api/store`)
+       .then((response) =>{
+        this.setState({StoreItem: response.data})
+       })
+       .catch(function(error){
+           console.log("error in fetch!" + error)
+       })
     }
 
     SendConfirm = () =>{
-        console.log("To be send: " + this.state.Basket)
+        axios.post(`${urlToFetch}/neworder`, {order: this.state.Basket})
+        .then((response) =>{
+            console.log("Server Responed with: " + response)
+        })
+        .catch(function(error){
+            console.log("error in post" + error)
+        })
     }
 
     upDateBasket = (element) =>{
