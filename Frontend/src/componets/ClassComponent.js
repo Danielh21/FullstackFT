@@ -1,7 +1,9 @@
 import React from 'react'
 import {Component } from 'react'
-import {Stateless} from './Stateless'
-import {Link} from 'react-router-dom'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import Shop from './Shop'
+import Checkout from './Checkout'
+import ThanksComponet from './ThanksComponet'
 
 
 class ClassComponent extends Component {
@@ -25,7 +27,11 @@ class ClassComponent extends Component {
         },1000)
     }
 
-    upDateBasket(element){
+    SendConfirm = () =>{
+        console.log("To be send: " + this.state.Basket)
+    }
+
+    upDateBasket = (element) =>{
         this.setState((preState) =>{
             if(preState.Basket.length === 0) return {Basket: [ {name: element.name, qua:1, price: element.price}]}
             var foundAMatch = false;
@@ -49,37 +55,25 @@ class ClassComponent extends Component {
 
 
     render(){
-            var listItems = this.state.StoreItem.map((element,index) =>{
-                return(
-
-                <li className="list-group-item" key={index}>
-                    Name: {element.name} - Price {element.price} 
-                    <input className="btn btn-primary btn-xs" 
-                    onClick={() => this.upDateBasket(element)} type="button" value="Add One"/>
-                </li>
-                )
-            })
-
         return(
-            <div className="ComponetDiv">
-                <div className="row">
-                    <div className="col-md-6">
-
-                            <h2>Friut Store</h2>
-                    <h3>Pick some Items you want to your basket!</h3>
-                    <ul className="list-group">
-                        {listItems}
-                        </ul>
-                        <Link to={"/checkout"} params={this.state.Basket}> Checkout</Link>
-                    </div>
-                    <div className="col-md-6">
-                        <Stateless basket= {this.state.Basket} />
-                    </div>
+            <Router>
+                <div>
+                    {/*{<Route path="/" exact component={() => (<Shop
+                     StoreItem={this.state.StoreItem} 
+                     Basket= {this.state.Basket}
+                     upDateBasket = {this.upDateBasket} />)}></Route>}*/}
+                     <Route path="/" exact component = {() => (<Shop
+                     StoreItem = {this.state.StoreItem}
+                     Basket= {this.state.Basket}
+                     upDateBasket = {this.upDateBasket}
+                     />)}></Route>
+                     <Route path="/checkout" component= {() => (<Checkout 
+                     SendConfirm = {this.SendConfirm} 
+                     Basket = {this.state.Basket} />)}></Route>
+                     <Route path="/goodbye" component= {() => <ThanksComponet />}></Route>
 
                 </div>
-
-            </div>
-
+            </Router>
         )
     }
 

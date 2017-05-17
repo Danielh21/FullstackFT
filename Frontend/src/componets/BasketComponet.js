@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Stateless = ({basket}) => {
+const BasketComponet = ({basket}) => {
     
     var basketList = basket.map(function(element,index){
         return(
@@ -19,3 +19,5 @@ export const Stateless = ({basket}) => {
     <p>{basketList}</p>
 </div>
 )}
+
+export default BasketComponet
