@@ -1,8 +1,13 @@
 import React from 'react'
 
-export const Checkout = ({basket}) => {
-
-
-
+const Checkout = ({props}) =>{
+    
+    return(
+    <div>
+        I am Checkout
+    </div>
+)
 
 }
+
+export default Checkout

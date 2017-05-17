@@ -1,6 +1,8 @@
 import React from 'react'
 import {Component } from 'react'
 import {Stateless} from './Stateless'
+import {Link} from 'react-router-dom'
+
 
 class ClassComponent extends Component {
 
@@ -35,8 +37,8 @@ class ClassComponent extends Component {
                     return {Basket: newBasket}
                 } 
            })
-           // Lenght of Basket is not 0, and added element is not a existing one!
            if(!foundAMatch){
+           // Lenght of Basket is not 0, and added element is not a existing one!
            var newBasket = preState.Basket
            newBasket.push({name: element.name, qua:1, price: element.price})
            }
@@ -52,7 +54,8 @@ class ClassComponent extends Component {
 
                 <li className="list-group-item" key={index}>
                     Name: {element.name} - Price {element.price} 
-                    <input className="btn btn-primary btn-xs" onClick={() => this.upDateBasket(element)} type="button" value="Add One"/>
+                    <input className="btn btn-primary btn-xs" 
+                    onClick={() => this.upDateBasket(element)} type="button" value="Add One"/>
                 </li>
                 )
             })
@@ -67,6 +70,7 @@ class ClassComponent extends Component {
                     <ul className="list-group">
                         {listItems}
                         </ul>
+                        <Link to={"/checkout"} params={this.state.Basket}> Checkout</Link>
                     </div>
                     <div className="col-md-6">
                         <Stateless basket= {this.state.Basket} />
