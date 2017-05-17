@@ -4,15 +4,29 @@ import BasketComponet from './BasketComponet'
 
 
 const Shop = ({StoreItem, Basket, upDateBasket}) =>{
-    var listItems = StoreItem.map((element,index) =>{
+
+    //Sorting out the unavailable
+    var avalibleItems = StoreItem.filter((element, index) =>{ return element.available })
+    var unavailableItems = StoreItem.filter((element, index) =>{ return !element.available })
+
+    var listItems = avalibleItems.map((element,index) =>{
                 return(
                 <li className="list-group-item" key={index}>
-                    Name: {element.name} - Price {element.price} 
+                    Name: {element.name} - Price {element.price}
                     <input className="btn btn-primary btn-xs" 
                     onClick={() => upDateBasket(element)} type="button" value="Add One"/>
                 </li>
                 )
             })
+
+    var unavailableList = unavailableItems.map((element,index)=>{
+        return(
+        <li className="list-group-item" key={index}>
+             Name: {element.name} - Price {element.price}
+             <span style={{color:"red"}}>  Unavailable</span> 
+        </li>
+        )
+    })
 
     return(
         <div className= "row">
@@ -21,6 +35,7 @@ const Shop = ({StoreItem, Basket, upDateBasket}) =>{
             <h3>Pick some Items you want to your basket!</h3>
             <ul className="list-group">
                         {listItems}
+                        {unavailableList}
                         </ul>
                 <Link to={"/checkout"}> Checkout</Link>
             </div>
