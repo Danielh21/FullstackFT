@@ -8,9 +8,8 @@ import {Stateless} from './componets/Stateless'
 window.React = React
 
 render(
-<div>
+<div className="container">
     <ClassComponent/>
-    <Stateless message="This Can hold data not state" />
 </div>
     ,
 

@@ -1,11 +1,21 @@
 import React from 'react'
 
-export const Stateless = ({message}) => (
+export const Stateless = ({basket}) => {
+    
+    var basketList = basket.map(function(element,index){
+        return(
+            <li key={index}>
+                {element.qua}x  {element.name} {element.price} DKK
+            </li>
+        )
+    })
+    
+    return(
 
 <div>
     <h3>
-     This is the Stateless Component
+     Your Basket:
     </h3>
-    <p>{message}</p>
+    <p>{basketList}</p>
 </div>
-)
+)}
