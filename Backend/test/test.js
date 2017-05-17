@@ -70,7 +70,7 @@ describe('API Test', function(){
                             done()
                         })
             })
-        })
+        }).timeout(5000) // The response from Mlab tends to be slow.
     })
 
 
